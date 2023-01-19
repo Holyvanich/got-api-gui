@@ -10,20 +10,25 @@ export default class App extends Component {
     
     constructor() {
         super();
-        this.toggleRandomComponent()
-        this.state = {
-            toggle: true,
-        }
         this.toggleRandomComponent = this.toggleRandomComponent.bind(this);
     }
 
-    
+    state = {
+        toggle: true,
+        selectedChar: null
+    }
 
     toggleRandomComponent() {
         this.setState(prevState => ({
             toggle: !prevState.toggle
         }));
-      }
+    }
+
+    onCharSelected = (id) => {
+        this.setState({
+            selectedChar: id
+        })
+    }
 
     render() {
             return (
@@ -43,10 +48,10 @@ export default class App extends Component {
                         </Row>
                         <Row>
                             <Col md='6'>
-                                <ItemList />
+                                <ItemList onCharSelected={this.onCharSelected}/>
                             </Col>
                             <Col md='6'>
-                                <CharDetails />
+                                <CharDetails charId={this.state.selectedChar}/>
                             </Col>
                         </Row>
                     </Container>

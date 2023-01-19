@@ -4,32 +4,29 @@ import gotService from '../../sevices/gotService';
 import Spinner from '../spinner'
 export default class RandomChar extends Component {
 
-    constructor() {
-        super();
-        this.updateChar()
-    }
-
     gotService = new gotService();
     state = {
         char: {},
         loading: true,
     }
 
+    componentDidMount() {
+        this.updateChar()
+        this.timerId = setInterval(this.updateChar, 1500);
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.timerId);
+    }
+
     onCharLoaded = (char) => {
         this.setState({char, loading: false})
     }
 
-    updateChar() {
+    updateChar = () => {
         const id = Math.floor(Math.random()*140 + 10);
         this.gotService.getCharacter(id)
-            .then(res => {
-                for (let prop in res) {
-                    if (!res[prop]) {
-                        res[prop] = 'Unknown';
-                    }
-                }
-                this.onCharLoaded(res)
-                }
+            .then(res => {this.onCharLoaded(res)}
             )
     }
 

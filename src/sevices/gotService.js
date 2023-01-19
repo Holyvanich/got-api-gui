@@ -2,6 +2,7 @@ export default class GotSercive {
 
     constructor() {
         this._apiBase = 'https://anapioficeandfire.com/api';
+        this.page = Math.floor(Math.random()*40 + 5);
     }
 
     async getResource(url) {
@@ -14,7 +15,7 @@ export default class GotSercive {
     }
 
     async getAllCharacters() {
-        const res = await this.getResource('/characters');
+        const res = await this.getResource(`/characters?page=${this.page}`);
         return res.map(this._transformCharacter)
     }
     async getCharacter(id) {
@@ -35,6 +36,11 @@ export default class GotSercive {
     }
 
     _transformCharacter(char) {
+        for (let prop in char) {
+            if (!char[prop]) {
+                char[prop] = 'Unknown';
+            }
+        }
         return {
             name: char.name,
             gender: char.gender,
