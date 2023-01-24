@@ -2,8 +2,12 @@ import React, {Component} from 'react';
 import {Col, Row, Container} from 'reactstrap';
 import Header from '../header';
 import RandomChar from '../randomChar';
-import CharacterPage from '../characterPage/characterPage';
+import CharacterPage from '../pages/characterPage/characterPage';
+import BookPage from '../pages/bookPage/bookPage';
+import HousePage from '../pages/housePage/housePage';
+import gotSercive from '../../sevices/gotService';
 import './app.css'
+
 
 export default class App extends Component {
     
@@ -11,6 +15,8 @@ export default class App extends Component {
         super();
         this.toggleRandomComponent = this.toggleRandomComponent.bind(this);
     }
+
+    gotSercive = new gotSercive();
 
     state = {
         toggle: true,
@@ -40,6 +46,8 @@ export default class App extends Component {
                             </Col>
                         </Row>
                         <CharacterPage/>
+                        <BookPage/>
+                        <HousePage/>
                     </Container>
                 </>
             );
